@@ -1,0 +1,40 @@
+version: '3'
+
+volumes:
+  pgdata:
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      DSN: "postgresql+psycopg2://postgres:password@postgres-bot:5432/hackathon_bot?sslmode=disable&connect_timeout=3"
+    env_file:
+      - ./backend/.env
+    user: '${UID}:${GID}'
+    depends_on:
+      - postgres-bot
+
+  postgres-bot:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hackathon_bot
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/
+    user: '${UID}:${GID}'
