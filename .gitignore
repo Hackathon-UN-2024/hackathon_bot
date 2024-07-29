@@ -1,0 +1,15 @@
+# VENV
+venv
+
+# IDES
+.idea
+
+# Enviromental variables
+.env
+
+# Secrets
+client_secret.json
+credentials.json
+
+# PGDATA
+pgdata
