@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hackathon</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- Pantalla de inicio -->
+        <div id="splash-screen" class="splash-screen">
+            <h1>Bienvenido a Deal Genius</h1>
+            <button id="start-button">Comenzar</button>
+        </div>
+
+        <!-- Contenedor del chat -->
+        <div class="chat-container hidden" id="chat-container">
+            <header>
+                <h2>Deal Genius</h2>
+            </header>
+            <div class="chat-box" id="chat-box">
+                <div class="message entrante">
+                    <p>Hola<br>¿Cómo puedo ayudarte?</p>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" id="mensaje" placeholder="Escribe un mensaje">
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
+            <!-- Switch para cambiar de tema -->
+            <div class="theme-switcher">
+                <label for="theme-switch">Modo oscuro</label>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
