@@ -5,8 +5,8 @@ class HistoryBase(BaseModel):
     bot_response: str
     feedback: bool
 
-class HistoryCreate(HistoryBase):
-    pass
+class HistoryCreate(BaseModel):
+    user_message: str
 
 class History(HistoryBase):
     id: int
