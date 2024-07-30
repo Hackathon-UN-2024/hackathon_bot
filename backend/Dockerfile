@@ -1,5 +1,7 @@
 FROM python:3.12.4-alpine
 
+RUN apk add gcc python3-dev libc-dev geos-dev
+
 # Set the working directory
 WORKDIR /app
 

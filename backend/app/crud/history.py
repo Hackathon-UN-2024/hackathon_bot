@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from ..models.history import History
 from ..schemas.history import HistoryCreate
-from ..llm.gemini import generate_bot_response
+from ..llm.vertex import generate_bot_response
 
 def create_history(db: Session, history: HistoryCreate):
     bot_response = generate_bot_response(history.user_message)
