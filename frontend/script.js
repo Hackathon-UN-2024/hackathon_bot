@@ -2,14 +2,52 @@ function sendMessage() {
     var inputField = document.getElementById('mensaje');
     var mensaje = inputField.value;
     if (mensaje.trim() !== '') {
-        var chatBox = document.getElementById('chat-box');
-        var newMessage = document.createElement('div');
-        newMessage.classList.add('message', 'saliente');
-        newMessage.textContent = mensaje;
-        chatBox.appendChild(newMessage);
-        inputField.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
+        addMessageBubble(inputField, mensaje, "saliente")
+
+        let data = {
+            "user_message": mensaje,
+        }
+
+        getBotMessage("http://localhost:3000/histories", data).then(response => {
+            if (response == null) {
+                return
+            }
+
+            // { bot_response: string }
+            addMessageBubble(inputField, response.bot_response, "entrante")
+        }).catch(error => {
+            console.error(error);
+        })
     }
+}
+
+function addMessageBubble(inputField, mensaje, messageDirection) {
+    let chatBox = document.getElementById('chat-box');
+    let newMessage = document.createElement('div');
+    newMessage.classList.add('message', messageDirection);
+    newMessage.textContent = mensaje;
+    chatBox.appendChild(newMessage);
+    inputField.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function getBotMessage(url = '', data = {}) {
+    if (data === {}) {
+        return Promise.resolve(null)
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    return response.json();
 }
 
 document.getElementById('mensaje').addEventListener('keypress', function(event) {
